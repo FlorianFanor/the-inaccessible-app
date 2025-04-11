@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/the-inaccessible-app/static/css/main.1971f5fc.css",
-    "main.js": "/the-inaccessible-app/static/js/main.163f5e86.js",
+    "main.css": "/the-inaccessible-app/static/css/main.2744822c.css",
+    "main.js": "/the-inaccessible-app/static/js/main.66b0d3b3.js",
     "static/js/453.2e6a7e3f.chunk.js": "/the-inaccessible-app/static/js/453.2e6a7e3f.chunk.js",
     "static/media/logo.svg": "/the-inaccessible-app/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/the-inaccessible-app/index.html",
-    "main.1971f5fc.css.map": "/the-inaccessible-app/static/css/main.1971f5fc.css.map",
-    "main.163f5e86.js.map": "/the-inaccessible-app/static/js/main.163f5e86.js.map",
+    "main.2744822c.css.map": "/the-inaccessible-app/static/css/main.2744822c.css.map",
+    "main.66b0d3b3.js.map": "/the-inaccessible-app/static/js/main.66b0d3b3.js.map",
     "453.2e6a7e3f.chunk.js.map": "/the-inaccessible-app/static/js/453.2e6a7e3f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1971f5fc.css",
-    "static/js/main.163f5e86.js"
+    "static/css/main.2744822c.css",
+    "static/js/main.66b0d3b3.js"
   ]
 }
