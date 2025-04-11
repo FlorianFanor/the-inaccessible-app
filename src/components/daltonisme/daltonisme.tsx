@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import ScreenReaderExperience from "../keyboard-navigation/keyboard-navigation.tsx";
 
 export default function Daltonisme() {
-    const [step, setStep] = useState<"start" | "form" | "color-test" | "link-trap" | "finished">("start");
+    const [step, setStep] = useState<"start" | "form" | "color-test" | "link-trap" | "finished" | "screen-reader-experience">("start");
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -42,7 +43,7 @@ export default function Daltonisme() {
 
 
     return (
-        <main className="min-h-screen bg-white text-gray-800 flex flex-col items-center justify-center p-8" >
+        <main className="mt-20 min-h-screen bg-white text-gray-800 flex flex-col items-center justify-center p-8" >
             <div className="max-w-3xl text-center">
                 <h1 className="text-4xl font-bold mb-4">Bienvenue sur The inaccessible app</h1>
                 <p className="text-lg mb-6">
@@ -59,7 +60,7 @@ export default function Daltonisme() {
                 </div>
             </div>
 
-            <div className="mt-20 p-8 max-w-xl mx-auto bg-gray-300">
+            <div className="mt-10 p-8 max-w-xl mx-auto bg-gray-300">
                 <h2 className="text-2xl font-bold mb-4">Parcours Daltonisme</h2>
                 {step === "start" && (
                     <div>
@@ -243,6 +244,27 @@ export default function Daltonisme() {
                     </div>
                 )}
             </div>
+
+            <div className="mt-20 border rounded-2xl p-6 shadow hover:shadow-lg transition">
+                <h2 className="text-2xl font-semibold mb-2">Parcours 2 – Lecteur d’écran</h2>
+                <p className="mb-4">Formulaire + navigation sans retour visuel, comme un utilisateur non-voyant.</p>
+                <button
+                    onClick={() => {
+                        setStartTime(Date.now());
+                        setStep("screen-reader-experience");
+                    }}
+                    className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                >
+                    Lancer le parcours
+                </button>
+            </div>
+
+            {step === "screen-reader-experience" && (
+                <ScreenReaderExperience onFinish={() => {
+                    setEndTime(Date.now());
+                    setStep("finished");
+                }} />
+            )}
         </main>
     );
 }
