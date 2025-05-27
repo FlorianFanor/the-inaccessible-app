@@ -22,7 +22,7 @@ const LinkTrap = ({ setEndTime, setStep }) => {
             </p>
 
             <p className="text-sm italic text-gray-600">
-                Et oui… pas de soulignement, pas de hover clair, pas d’alternative. Imagine lire ça sans percevoir le bleu.
+                Et oui… pas de soulignement, pas de hover clair, pas d’alternative. Imagine lire ça sans pouvoir percevoir le bleu.
             </p>
         </div>
     )
