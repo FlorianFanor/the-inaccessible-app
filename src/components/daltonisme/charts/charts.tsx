@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Step } from "../daltonisme.tsx";
 
 const Charts = ({ setStep }) => {
   const [message, setMessage] = useState("");
@@ -6,7 +7,7 @@ const Charts = ({ setStep }) => {
   const handleClick = (part: string) => {
     if (part === "amber") {
       setMessage("Bravo ! Tu as trouvé la part des utilisateurs inscrits.");
-      setStep("command-validation");
+      setStep(Step.CHARTS);
     } else {
       setMessage(
         "Ce n'était pas la bonne réponse. Sans vision des couleurs, c'est presque mission impossible."

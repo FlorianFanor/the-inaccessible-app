@@ -1,4 +1,5 @@
 import React from "react";
+import { Step } from "../daltonisme.tsx";
 
 const FavoriteProduct = ({ setStep }) => {
   const products = [
@@ -76,7 +77,7 @@ const FavoriteProduct = ({ setStep }) => {
                   : "Ce produit n'est pas disponible"
               );
               if (product.available) {
-                setStep("charts");
+                setStep(Step.FAVORITE_PRODUCT);
               }
             }}
           >

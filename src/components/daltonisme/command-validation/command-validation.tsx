@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Step } from "../daltonisme.tsx";
 
 const colors = [
   { name: "red", hex: "#ef4444" },
@@ -23,6 +24,8 @@ const CommandValidation = ({ setStep }) => {
   );
   const intervalRef = useRef<NodeJS.Timer | null>(null);
   const isRunning = useRef(true);
+  const currentColor = colors[currentColorIndex];
+  const success = currentColor.name === "green";
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -37,8 +40,6 @@ const CommandValidation = ({ setStep }) => {
 
     isRunning.current = false;
     clearInterval(intervalRef.current!);
-    const currentColor = colors[currentColorIndex];
-    const success = currentColor.name === "green";
 
     setHistory((prev) => [...prev, { color: currentColor.name, success }]);
 
@@ -50,7 +51,7 @@ const CommandValidation = ({ setStep }) => {
 
     if (success) {
       setTimeout(() => {
-        setStep("form");
+        setStep(Step.COMMAND_VALIDATION);
       }, 2000);
     }
   };
@@ -71,21 +72,26 @@ const CommandValidation = ({ setStep }) => {
         Clique quand la couleur est verte
       </h2>
 
-      <div
-        className="w-full h-12 rounded transition-all duration-300 border"
+      <button
+        type="button"
+        className="w-full h-12 rounded transition-all duration-300 border cursor-pointer"
         style={{ backgroundColor: colors[currentColorIndex].hex }}
         onClick={handleClick}
+        aria-label="Clique quand la couleur est verte"
       />
 
       {message && (
-        <div className="mt-6 text-md font-medium bg-yellow-100 border border-yellow-300 p-4 rounded text-gray-800">
+        <div className="mt-6 text-md font-medium bg-yellow-100 border border-yellow-300 p-2 rounded text-gray-800 max-w-xs mx-auto">
           {message}
-          <button
-            onClick={handleRetry}
-            className="mt-4 block mx-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Rejouer
-          </button>
+
+          {!success && (
+            <button
+              onClick={handleRetry}
+              className="mt-4 block mx-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Rejouer
+            </button>
+          )}
         </div>
       )}
 
