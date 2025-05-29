@@ -1,57 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { Step } from "../daltonisme.tsx";
 
+const products = [
+  { id: 1, name: "T-shirt Rouge", available: false, color: "bg-orange-500" },
+  { id: 2, name: "T-shirt Bleu", available: false, color: "bg-orange-500" },
+  { id: 3, name: "T-shirt Vert", available: false, color: "bg-orange-500" },
+  { id: 4, name: "T-shirt Jaune", available: true, color: "bg-green-500" },
+  {
+    id: 5,
+    name: "T-shirt Turquoise",
+    available: false,
+    color: "bg-orange-500",
+  },
+  { id: 6, name: "T-shirt Orange", available: false, color: "bg-orange-500" },
+  { id: 7, name: "T-shirt Violet", available: false, color: "bg-orange-500" },
+  { id: 8, name: "T-shirt Gris", available: false, color: "bg-orange-500" },
+  { id: 9, name: "T-shirt Noir", available: false, color: "bg-orange-500" },
+  { id: 10, name: "T-shirt Blanc", available: false, color: "bg-orange-500" },
+  {
+    id: 11,
+    name: "T-shirt Bordeaux",
+    available: false,
+    color: "bg-orange-500",
+  },
+  { id: 12, name: "T-shirt Rose", available: true, color: "bg-green-500" },
+  { id: 13, name: "T-shirt Marine", available: false, color: "bg-orange-500" },
+  {
+    id: 14,
+    name: "T-shirt Kaki",
+    available: false,
+    color: "bg-orange-500",
+  },
+  { id: 15, name: "T-shirt Corail", available: false, color: "bg-orange-500" },
+  { id: 16, name: "T-shirt Menthe", available: true, color: "bg-green-500" },
+];
+
 const FavoriteProduct = ({ setStep }) => {
-  const products = [
-    {
-      id: 1,
-      name: "T-shirt Rouge",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 2,
-      name: "T-shirt Bleu",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 3,
-      name: "T-shirt Jaune",
-      available: true,
-      color: "bg-green-500",
-    },
-    {
-      id: 4,
-      name: "T-shirt Vert",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 5,
-      name: "T-shirt Rose",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 6,
-      name: "T-shirt Orange",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 7,
-      name: "T-shirt Violet",
-      available: false,
-      color: "bg-orange-500",
-    },
-    {
-      id: 8,
-      name: "T-shirt Gris",
-      available: true,
-      color: "bg-green-500",
-    },
-  ];
+  const [shuffled, setShuffled] = useState(() => shuffleProducts());
+  const [tries, setTries] = useState(0);
+
+  const shuffleProducts = () => {
+    return [...products].sort(() => 0.5 - Math.random());
+  };
+
+  const handleClick = (product) => {
+    setTries(tries + 1);
+    alert(
+      product.available
+        ? `Tu as choisi le ${product.name} qui est disponible, bien joué !`
+        : "Ce produit n'est pas disponible, essaie encore."
+    );
+    if (product.available) {
+      setStep(Step.FAVORITE_PRODUCT);
+    } else {
+      setShuffled(shuffleProducts());
+    }
+  };
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -66,20 +70,11 @@ const FavoriteProduct = ({ setStep }) => {
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {products.map((product) => (
+        {shuffled.map((product) => (
           <button
             key={product.id}
             className={`p-4 rounded-lg shadow text-white font-semibold ${product.color}`}
-            onClick={() => {
-              alert(
-                product.available
-                  ? `Tu as choisi le ${product.name} qui est disponible, bien joué !`
-                  : "Ce produit n'est pas disponible"
-              );
-              if (product.available) {
-                setStep(Step.FAVORITE_PRODUCT);
-              }
-            }}
+            onClick={() => handleClick(product)}
           >
             {product.name}
           </button>
@@ -87,6 +82,8 @@ const FavoriteProduct = ({ setStep }) => {
       </div>
 
       <p className="mt-6 text-sm text-gray-600 italic">
+        Nombre d'essais : {tries}
+        <br />
         Sans perception des couleurs, tu devrais deviner à chaque fois que tu
         intéragis avec un site...
       </p>
