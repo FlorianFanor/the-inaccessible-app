@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Step } from "../daltonisme.tsx";
 
-const colors = [
+const initialColors = [
   { name: "red", hex: "#ef4444" },
   { name: "orange", hex: "#fb923c" },
   { name: "yellow", hex: "#facc15" },
@@ -12,7 +12,6 @@ const colors = [
   { name: "orange", hex: "#fb345d" },
   { name: "yellow", hex: "#fa5ddd" },
   { name: "blue", hex: "#3b03ff" },
-  { name: "green", hex: "#22c55e" },
   { name: "purple", hex: "#8b0ddd" },
 ];
 
@@ -24,6 +23,12 @@ const CommandValidation = ({ setStep }) => {
   );
   const intervalRef = useRef<NodeJS.Timer | null>(null);
   const isRunning = useRef(true);
+
+  const shuffleColors = (array) => {
+    return [...array].sort(() => 0.5 - Math.random());
+  };
+
+  const [colors, setColors] = useState(() => shuffleColors(initialColors));
   const currentColor = colors[currentColorIndex];
   const success = currentColor.name === "green";
 
@@ -33,7 +38,7 @@ const CommandValidation = ({ setStep }) => {
     }, 700);
 
     return () => clearInterval(intervalRef.current!);
-  }, []);
+  }, [colors.length]);
 
   const handleClick = () => {
     if (!isRunning.current) return;
@@ -59,10 +64,12 @@ const CommandValidation = ({ setStep }) => {
   const handleRetry = () => {
     setMessage("");
     isRunning.current = true;
+    const shuffled = shuffleColors(initialColors);
+    setColors(shuffled);
     setCurrentColorIndex(0);
 
     intervalRef.current = setInterval(() => {
-      setCurrentColorIndex((prev) => (prev + 1) % colors.length);
+      setCurrentColorIndex((prev) => (prev + 1) % shuffled.length);
     }, 700);
   };
 
