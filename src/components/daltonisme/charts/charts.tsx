@@ -1,17 +1,56 @@
 import React, { useState } from "react";
 import { Step } from "../daltonisme.tsx";
 
+const categories = [
+  { key: "inscrits", label: "Utilisateurs inscrits" },
+  { key: "actifs", label: "Utilisateurs actifs" },
+  { key: "inactifs", label: "Utilisateurs inactifs" },
+  { key: "premium", label: "Utilisateurs premium" },
+];
+
+const colors = [
+  { key: "green", fill: "#16a34a", legend: "bg-green-600" },
+  { key: "red", fill: "#ef4444", legend: "bg-red-500" },
+  { key: "blue", fill: "#3b82f6", legend: "bg-blue-500" },
+  { key: "violet", fill: "#8b5cf6", legend: "bg-violet-500" },
+];
+
 const Charts = ({ setStep }) => {
   const [message, setMessage] = useState("");
 
-  const handleClick = (part: string) => {
-    if (part === "amber") {
+  const shufflePie = (array) => {
+    return [...array].sort(() => 0.5 - Math.random());
+  };
+
+  const getShuffledParts = () => {
+    const inscritsPart = {
+      ...categories[0],
+      color: colors[0],
+    };
+    const otherCategories = shufflePie(categories.slice(1));
+    const otherColors = shufflePie(colors.slice(1));
+    const otherParts = otherCategories.map((cat, i) => ({
+      ...cat,
+      color: otherColors[i],
+    }));
+
+    return shufflePie([inscritsPart, ...otherParts]);
+  };
+
+  const [parts, setParts] = useState(getShuffledParts);
+
+  const inscritsColor = colors[0].fill;
+
+  const handleClick = (fill: string) => {
+    if (fill === inscritsColor) {
       setMessage("Bravo ! Tu as trouvé la part des utilisateurs inscrits.");
       setStep(Step.CHARTS);
     } else {
+      setParts(getShuffledParts());
       setMessage(
         "Ce n'était pas la bonne réponse. Sans vision des couleurs, c'est presque mission impossible."
       );
+
       setTimeout(() => {
         setMessage("");
       }, 2000);
@@ -30,55 +69,45 @@ const Charts = ({ setStep }) => {
       </p>
 
       <div className="w-64 h-64 mx-auto relative">
-        <svg
-          xlmsx="http://www.w3.org/2000/svg"
-          viewBox="0 0 200 200"
-          width="256"
-          height="256"
-        >
+        <svg viewBox="0 0 200 200" width="256" height="256">
           <path
             d="M 100,100 L 0.0,100.00000000000001 A 100,100 0 0 1 99.99999999999999,0.0 Z"
-            fill="#16a34a"
-            onClick={() => handleClick("amber")}
+            fill={parts[0].color.fill}
+            onClick={() => handleClick(parts[0].color.fill)}
+            style={{ cursor: "pointer" }}
           />
+
           <path
             d="M 100,100 L 200.0,100.0 A 100,100 0 0 1 100.0,200.0 Z"
-            fill="#ef4444"
-            onClick={() => handleClick("red")}
+            fill={parts[1].color.fill}
+            onClick={() => handleClick(parts[1].color.fill)}
+            style={{ cursor: "pointer" }}
           />
+
           <path
             d="M 100,100 L 100.0,200.0 A 100,100 0 0 1 0.0,100.00000000000001 Z"
-            fill="#3b82f6"
-            onClick={() => handleClick("orange")}
+            fill={parts[2].color.fill}
+            onClick={() => handleClick(parts[2].color.fill)}
+            style={{ cursor: "pointer" }}
           />
+
           <path
             d="M 100,100 L 99.99999999999999,0.0 A 100,100 0 0 1 200.0,99.99999999999997 Z"
-            fill="#8b5cf6"
-            onClick={() => handleClick("yellow")}
+            fill={parts[3].color.fill}
+            onClick={() => handleClick(parts[3].color.fill)}
+            style={{ cursor: "pointer" }}
           />
         </svg>
       </div>
 
       <div className="mt-6 flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 bg-red-500 rounded-full"></span>
-          <span>Utilisateurs actifs</span>
-        </div>
+        {parts.map((part, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <span className={`w-4 h-4 rounded-full ${part.color.legend}`} />
 
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 bg-blue-500 rounded-full"></span>
-          <span>Utilisateurs inactifs</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 bg-green-600 rounded-full"></span>
-          <span>Utilisateurs inscrits</span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="w-4 h-4 bg-violet-500 rounded-full"></span>
-          <span>Utilisateurs premium</span>
-        </div>
+            <span>{part.label}</span>
+          </div>
+        ))}
       </div>
 
       {message && (
