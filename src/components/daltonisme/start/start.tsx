@@ -7,7 +7,7 @@ const Start = ({ setStep }) => {
       <p className="mb-4">
         Pour commencer, installe l'extension{" "}
         <a
-          href="https://chrome.google.com/webstore/detail/web-disability-simulator/djcbedpbcajholncbgdcdnhmlblkpggk"
+          href="https://chromewebstore.google.com/detail/web-disability-simulator/olioanlbgbpmdlgjnnampnnlohigkjla?hl=en"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline"
