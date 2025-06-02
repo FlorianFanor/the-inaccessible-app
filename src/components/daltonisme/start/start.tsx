@@ -1,6 +1,7 @@
 import React from "react";
+import { Step } from "../daltonisme.tsx";
 
-const Start = ({ setStartTime }) => {
+const Start = ({ setStep }) => {
   return (
     <div>
       <p className="mb-4">
@@ -16,9 +17,7 @@ const Start = ({ setStartTime }) => {
         et active <strong>Total Color Blindness</strong>.
       </p>
       <button
-        onClick={() => {
-          setStartTime(Date.now());
-        }}
+        onClick={() => setStep(Step.START)}
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
         Démarrer le parcours

@@ -7,11 +7,13 @@ import ColorTest from "./color-test/color-test.tsx";
 import LinkTrap from "./link-trap/link-trap.tsx";
 import Start from "./start/start.tsx";
 import Finish from "./finish/finish.tsx";
+import Check from "./check/check.tsx";
 
 type StepType = "start" | "form" | "color-test" | "link-trap" | "finished";
 
 export enum Step {
   START = "start",
+  CHECK = "check",
   FAVORITE_PRODUCT = "favorite-product",
   CHARTS = "charts",
   COMMAND_VALIDATION = "command-validation",
@@ -40,6 +42,12 @@ export const Daltonisme = () => {
 
   const goToNextStep = (currentStep: Step) => {
     switch (currentStep) {
+      case Step.START:
+        setStep(Step.CHECK);
+        break;
+      case Step.CHECK:
+        handleStart();
+        break;
       case Step.FAVORITE_PRODUCT:
       case Step.CHARTS:
       case Step.COMMAND_VALIDATION:
@@ -57,8 +65,8 @@ export const Daltonisme = () => {
     }
   };
 
-  const handleStart = (startTime: number) => {
-    setStartTime(startTime);
+  const handleStart = () => {
+    setStartTime(Date.now());
     setStep(getRandomFirstStep());
   };
 
@@ -67,7 +75,11 @@ export const Daltonisme = () => {
       <div className="mt-20 p-8 max-w-xl mx-auto bg-gray-300">
         <h2 className="text-2xl font-bold mb-4">Parcours Daltonisme</h2>
         {step === Step.START && (
-          <Start setStartTime={handleStart} />
+          <Start setStep={goToNextStep} />
+        )}
+
+        {step === Step.CHECK && (
+          <Check handleStart={handleStart} />
         )}
 
         {step === Step.FAVORITE_PRODUCT && (
