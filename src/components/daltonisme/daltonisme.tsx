@@ -67,7 +67,7 @@ export const Daltonisme = () => {
       <div className="mt-20 p-8 max-w-xl mx-auto bg-gray-300">
         <h2 className="text-2xl font-bold mb-4">Parcours Daltonisme</h2>
         {step === Step.START && (
-          <Start setStep={handleStart} setStartTime={setStartTime} />
+          <Start setStartTime={handleStart} />
         )}
 
         {step === Step.FAVORITE_PRODUCT && (

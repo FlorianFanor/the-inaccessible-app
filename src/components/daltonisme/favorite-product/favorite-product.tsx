@@ -36,12 +36,14 @@ const products = [
 ];
 
 const FavoriteProduct = ({ setStep }) => {
-  const [shuffled, setShuffled] = useState(() => shuffleProducts());
-  const [tries, setTries] = useState(0);
-
   const shuffleProducts = () => {
     return [...products].sort(() => 0.5 - Math.random());
   };
+
+
+  const [shuffled, setShuffled] = useState(() => shuffleProducts());
+  const [tries, setTries] = useState(0);
+
 
   const handleClick = (product) => {
     setTries(tries + 1);

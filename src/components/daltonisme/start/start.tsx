@@ -1,7 +1,6 @@
 import React from "react";
-import { Step } from "../daltonisme.tsx";
 
-const Start = ({ setStartTime, setStep }) => {
+const Start = ({ setStartTime }) => {
   return (
     <div>
       <p className="mb-4">
@@ -19,7 +18,6 @@ const Start = ({ setStartTime, setStep }) => {
       <button
         onClick={() => {
           setStartTime(Date.now());
-          setStep(Step.START);
         }}
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
